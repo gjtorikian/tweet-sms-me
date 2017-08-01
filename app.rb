@@ -46,7 +46,7 @@ EM.schedule do
 
   client = TweetStream::Client.new
 
-  client.follow([123667379]) do |tweet|
+  client.follow([202668848]) do |tweet|
     send_sms("#{tweet.user.screen_name}: #{tweet.text}")
   end
 
