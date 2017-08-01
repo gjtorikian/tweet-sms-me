@@ -46,16 +46,8 @@ EM.schedule do
 
   client = TweetStream::Client.new
 
-  client.on_direct_message do |direct_message|
-    if direct_message.sender.screen_name != ENV["TWITTER_USERNAME"]
-      send_sms("DM from #{direct_message.sender.screen_name}: #{direct_message.text}")
-    end
-  end
-
-  client.on_timeline_status do |status|
-    if status.user_mentions.any? { |mention| mention.screen_name == ENV["TWITTER_USERNAME"] }
-      send_sms("@mention from #{status.user.screen_name}: #{status.text}")
-    end
+  client.follow([123667379]) do |tweet|
+    send_sms("#{tweet.user.screen_name}: #{tweet.text}")
   end
 
   client.userstream
