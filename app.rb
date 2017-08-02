@@ -47,7 +47,9 @@ EM.schedule do
   client = TweetStream::Client.new
 
   client.follow([202668848]) do |tweet|
-    send_sms("#{tweet.user.screen_name}: #{tweet.text}")
+    if !tweet.retweet && !tweet.reply?
+      send_sms("#{tweet.user.screen_name}: #{tweet.text}\n#{tweet.expanded_url}")
+    end
   end
 
   client.userstream
