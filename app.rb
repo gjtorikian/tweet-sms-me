@@ -47,9 +47,7 @@ EM.schedule do
   client = TweetStream::Client.new
 
   client.follow([202668848]) do |tweet|
-    if tweet.text =~ /^bmoviesd:/
-      send_sms("#{tweet.user.screen_name}: #{tweet.text}\n#{tweet.url}")
-    end
+    send_sms("#{tweet.text}\n#{tweet.url}")
   end
 
   client.userstream
